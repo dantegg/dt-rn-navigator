@@ -17,39 +17,101 @@ export default class FirstPage extends Component{
         super(props)
     }
 
-    _navigate(name,type='Normal'){
+    onPress() {
+        alert("我是Spike!");
+    }
+
+    /**
+     * 跳转页面至SecondPage
+     * @param name 传递参数
+     * @param type 动画类型
+     */
+    gotoNext(name, type = 'Normal') {
         this.props.navigator.push({
-            component:SecondPage,
-            passProps:{
-                name:name
+            component: SecondPage,
+            passProps: {
+                id: name
             },
-            type:type
+            onPress: this.onPress,
+            rightText: 'ALERT!',
+            type: type
         })
     }
 
-    render(){
-        return(
-            <View>
-                <View>
-                    <Text>
-                        {'第一页'}
-                    </Text>
-                </View>
+    render() {
+        // 点击按钮使用Home页面入栈
+        return (
+            <View style={styles.container}>
                 <TouchableOpacity
-                onPress={()=>this._navigate('你好！(来源第一页:右出)')}
-                >
-                    <Text>
+                    style={styles.button}
+                    onPress={()=>this.gotoNext('第一页')}>
+                    <Text style={styles.buttonText}>
                         {'跳转至第二页(右出)'}
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={()=>this._navigate('你好！(来源第一页:底出)','Bottom')}
-                >
-                    <Text>
-                        {'跳转至第二页(底出)'}
+                    style={styles.button}
+                    onPress={()=>this.gotoNext('第一页', 'Modal')}>
+                    <Text style={styles.buttonText}>
+                        {'跳转至第二页(底部)'}
                     </Text>
                 </TouchableOpacity>
             </View>
-        )
+        );
     }
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 4,
+        marginTop: 100,
+        flexDirection: 'column'
+    },
+    // 导航栏
+    navContainer: {
+        backgroundColor: '#81c04d',
+        paddingTop: 12,
+        paddingBottom: 10,
+    },
+    // 导航栏文字
+    headText: {
+        color: '#ffffff',
+        fontSize: 22
+    },
+    // 按钮
+    button: {
+        height: 60,
+        marginTop: 10,
+        justifyContent: 'center', // 内容居中显示
+        backgroundColor: '#ff1049',
+        alignItems: 'center'
+    },
+    // 按钮文字
+    buttonText: {
+        fontSize: 18,
+        color: '#ffffff'
+    },
+    // 左面导航按钮
+    leftNavButtonText: {
+        color: '#ffffff',
+        fontSize: 18,
+        marginLeft: 13
+    },
+    // 右面导航按钮
+    rightNavButtonText: {
+        color: '#ffffff',
+        fontSize: 18,
+        marginRight: 13
+    },
+    // 标题
+    title: {
+        fontSize: 18,
+        color: '#fff',
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        flex: 1                //Step 3
+    }
+});
